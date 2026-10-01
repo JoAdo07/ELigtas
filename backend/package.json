@@ -1,0 +1,9 @@
+{
+  "name": "eligtas-backend",
+  "version": "0.1.0",
+  "type": "module",
+  "description": "ELigtas backend (SRS implementation: AI video categorization core)",
+  "scripts": {
+    "test": "node --test \"tests/*.test.js\""
+  }
+}
