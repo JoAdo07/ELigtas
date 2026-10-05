@@ -17,4 +17,15 @@ await categorizeVideo(input, { apiKey: process.env.OPENAI_API_KEY });
 applyOverride(record, "Travel");
 ```
 
-Run tests: `npm test`.
+## Manual import via link (SRS §3.2 FR2)
+
+```js
+import { parseVideoUrl } from "./src/import-url.js";
+
+parseVideoUrl("https://youtu.be/dQw4w9WgXcQ");
+// → { platform: "youtube", videoId: "dQw4w9WgXcQ",
+//     canonicalUrl: "https://www.youtube.com/watch?v=dQw4w9WgXcQ" }
+```
+
+Unparseable links throw a plain-English error (bad id, short link needing
+resolving, unsupported host). Run tests: `npm test`.
