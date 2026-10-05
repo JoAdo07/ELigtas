@@ -2,7 +2,7 @@
 
 ## Project: ELigtas
 
-### Founder: Johan B: Adonis
+### Founder: Johan B. Adonis
 
 ### Version: 1.0
 
