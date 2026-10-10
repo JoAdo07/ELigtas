@@ -4,9 +4,23 @@
 
 ### Founder: Johan B. Adonis
 
-### Version: 1.0
+### Version: 1.1 (see §7.3 revision history)
 
 ### Date: October 31, 2025
+
+---
+
+## 0. Implementation status
+
+Living companion to this spec — what actually runs today:
+
+* **AI categorization core** (§3.3): `backend/src/classify.js` — OpenAI-compatible
+  classifier with offline keyword fallback, confidence scores, manual overrides.
+* **Manual video import via link** (§3.2 FR2): `backend/src/import-url.js` —
+  YouTube/TikTok/Instagram URL parsing and normalization.
+* **CI**: backend tests run on every push and PR.
+
+Usage and tests: `backend/README.md`. To contribute, read `CONTRIBUTING.md` first.
 
 ---
 
@@ -254,6 +268,7 @@ Classify the following video into one of: Cooking, Tech Tips, Travel, Fitness, B
 | Version | Date       | Author          | Description          |
 | ------- | ---------- | ----------------| -------------------- |
 | 1.0     | 2025-10-31 | Johan B. Adonis | Initial SRS document |
+| 1.1     | 2026-10-10 | Johan B. Adonis | Implementation status (§0), backend core (§3.2–§3.3), CONTRIBUTING |
 
 ---
 
