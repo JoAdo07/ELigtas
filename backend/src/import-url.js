@@ -50,10 +50,10 @@ function tiktokId(url) {
   return null;
 }
 
-function instagramId(url) {
-  const m = url.pathname.match(/^\/(?:reel|p|tv)\/([^/?#]+)/);
-  const id = (m?.[1] ?? "").replace(/\/$/, "");
-  if (INSTAGRAM_ID.test(id)) return id;
+function instagramMedia(url) {
+  const m = url.pathname.match(/^\/(reel|p|tv)\/([^/?#]+)/);
+  const id = (m?.[2] ?? "").replace(/\/$/, "");
+  if (INSTAGRAM_ID.test(id)) return { id, type: m[1] };
   return null;
 }
 
@@ -83,9 +83,13 @@ export function parseVideoUrl(raw) {
     return { platform: "tiktok", videoId: found.id, canonicalUrl };
   }
   if (INSTAGRAM_HOSTS.has(host)) {
-    const id = instagramId(url);
-    if (!id) fail("no Instagram media id found (/reel/, /p/, /tv/)");
-    return { platform: "instagram", videoId: id, canonicalUrl: `https://www.instagram.com/reel/${id}/` };
+    const media = instagramMedia(url);
+    if (!media) fail("no Instagram media id found (/reel/, /p/, /tv/)");
+    return {
+      platform: "instagram",
+      videoId: media.id,
+      canonicalUrl: `https://www.instagram.com/${media.type}/${media.id}/`,
+    };
   }
   fail(`unsupported host ${JSON.stringify(host)} (youtube.com, tiktok.com, instagram.com)`);
 }

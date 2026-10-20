@@ -29,6 +29,17 @@ describe("parseVideoUrl", () => {
     assert.equal(parsed.canonicalUrl, "https://www.tiktok.com/@chef/video/7234567890123456789");
   });
 
+  it("keeps the Instagram media type in the canonical URL", () => {
+    const cases = [
+      ["https://www.instagram.com/reel/C8abcDEF123/", "https://www.instagram.com/reel/C8abcDEF123/"],
+      ["https://www.instagram.com/p/C8abcDEF123", "https://www.instagram.com/p/C8abcDEF123/"],
+      ["https://instagram.com/tv/C8abcDEF123?hl=en", "https://www.instagram.com/tv/C8abcDEF123/"],
+    ];
+    for (const [input, expected] of cases) {
+      assert.equal(parseVideoUrl(input).canonicalUrl, expected);
+    }
+  });
+
   const invalid = [
     ["", /empty link/],
     ["not a url", /not a valid URL/],
