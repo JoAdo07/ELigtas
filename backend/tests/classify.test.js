@@ -26,6 +26,23 @@ describe("scoreLocally", () => {
     assert.deepEqual(scoreLocally({ title: "zzzz qq9" }), { category: "Other", confidence: 0 });
     assert.deepEqual(scoreLocally({}), { category: "Other", confidence: 0 });
   });
+
+  it("ignores keywords hiding inside ordinary words", () => {
+    // "said" contains "ai", "happy" contains "app", "triple" contains "trip",
+    // and "shower" contains "show" — none of these are topic evidence.
+    assert.deepEqual(scoreLocally({ title: "He said hello" }), { category: "Other", confidence: 0 });
+    assert.deepEqual(scoreLocally({ title: "A happy puppy" }), { category: "Other", confidence: 0 });
+    assert.deepEqual(scoreLocally({ title: "Triple chocolate cake" }), { category: "Other", confidence: 0 });
+    assert.deepEqual(scoreLocally({ title: "Morning shower routine" }), { category: "Other", confidence: 0 });
+  });
+
+  it("still matches common word forms", () => {
+    assert.equal(scoreLocally({ title: "Cooking dinner tonight" }).category, "Cooking");
+    assert.equal(scoreLocally({ title: "Easy pasta recipes" }).category, "Cooking");
+    assert.equal(scoreLocally({ title: "Baking bread at home" }).category, "Cooking");
+    assert.equal(scoreLocally({ title: "Daily workouts" }).category, "Fitness");
+    assert.equal(scoreLocally({ title: "My favorite apps" }).category, "Tech Tips");
+  });
 });
 
 describe("buildClassificationPrompt", () => {
