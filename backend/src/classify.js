@@ -39,8 +39,29 @@ const KEYWORDS = Object.freeze({
   Other: [],
 });
 
-function words(text) {
-  return String(text ?? "").toLowerCase().match(/[a-z0-9]+/g) ?? [];
+const PATTERN_CACHE = new Map();
+
+/**
+ * Build (and cache) a whole-word matcher for a keyword.
+ *
+ * Substring matching mislabels ordinary text: "said" contains "ai", "happy"
+ * contains "app", and "triple" contains "trip". Matching word boundaries fixes
+ * that, while the optional suffix keeps useful inflections working
+ * ("cook" → cooking/cooked, "recipe" → recipes, "app" → apps).
+ *
+ * Keywords ending in "e" drop it before the suffix so "bake" also matches
+ * "baked" and "baking" (not just "bake"/"bakes").
+ */
+function keywordPattern(keyword) {
+  const cached = PATTERN_CACHE.get(keyword);
+  if (cached) return cached;
+
+  const escaped = keyword.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  const stem = keyword.endsWith("e") ? escaped.slice(0, -1) : escaped;
+  const suffix = keyword.endsWith("e") ? "(?:e|es|ed|ing|d)?" : "(?:s|es|ed|ing)?";
+  const pattern = new RegExp(`\\b${stem}${suffix}\\b`, "i");
+  PATTERN_CACHE.set(keyword, pattern);
+  return pattern;
 }
 
 export function scoreLocally(input = {}, categories = DEFAULT_CATEGORIES) {
@@ -51,7 +72,7 @@ export function scoreLocally(input = {}, categories = DEFAULT_CATEGORIES) {
   for (const category of categories) {
     let hits = 0;
     for (const keyword of KEYWORDS[category] ?? []) {
-      if (haystack.includes(keyword)) hits += 1;
+      if (keywordPattern(keyword).test(haystack)) hits += 1;
     }
     totalHits += hits;
     if (hits > bestHits) {
