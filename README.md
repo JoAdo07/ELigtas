@@ -20,6 +20,9 @@ Living companion to this spec — what actually runs today:
   YouTube/TikTok/Instagram URL parsing and normalization.
 * **CI**: backend tests run on every push and PR.
 
+New here? Start with `OVERVIEW.md` for a plain-language summary, current
+status, and roadmap.
+
 Usage and tests: `backend/README.md`. To contribute, read `CONTRIBUTING.md` first.
 
 ---
