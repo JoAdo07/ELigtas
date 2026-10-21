@@ -18,12 +18,16 @@ Living companion to this spec — what actually runs today:
   classifier with offline keyword fallback, confidence scores, manual overrides.
 * **Manual video import via link** (§3.2 FR2): `backend/src/import-url.js` —
   YouTube/TikTok/Instagram URL parsing and normalization.
-* **CI**: backend tests run on every push and PR.
+* **Local-first web library** (§3.2–§3.5): `web/` — paste-to-sort UI, 26
+  categories, public oEmbed metadata, browser storage, search, filters, manual
+  overrides, and JSON export.
+* **CI**: backend and web tests run on every push and PR.
 
 New here? Start with `OVERVIEW.md` for a plain-language summary, current
 status, and roadmap.
 
-Usage and tests: `backend/README.md`. To contribute, read `CONTRIBUTING.md` first.
+Usage and tests: `backend/README.md` and `web/README.md`. To contribute, read
+`CONTRIBUTING.md` first.
 
 ---
 
