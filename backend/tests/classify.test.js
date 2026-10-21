@@ -2,6 +2,7 @@ import { describe, it } from "node:test";
 import assert from "node:assert/strict";
 import {
   DEFAULT_CATEGORIES,
+  EXTENDED_CATEGORIES,
   applyOverride,
   buildClassificationPrompt,
   categorizeVideo,
@@ -31,9 +32,19 @@ describe("scoreLocally", () => {
     // "said" contains "ai", "happy" contains "app", "triple" contains "trip",
     // and "shower" contains "show" — none of these are topic evidence.
     assert.deepEqual(scoreLocally({ title: "He said hello" }), { category: "Other", confidence: 0 });
-    assert.deepEqual(scoreLocally({ title: "A happy puppy" }), { category: "Other", confidence: 0 });
-    assert.deepEqual(scoreLocally({ title: "Triple chocolate cake" }), { category: "Other", confidence: 0 });
+    assert.deepEqual(scoreLocally({ title: "A happy occasion" }), { category: "Other", confidence: 0 });
+    assert.deepEqual(scoreLocally({ title: "Triple jump technique" }), { category: "Other", confidence: 0 });
     assert.deepEqual(scoreLocally({ title: "Morning shower routine" }), { category: "Other", confidence: 0 });
+  });
+
+  it("supports the broader web taxonomy", () => {
+    const category = (title) => scoreLocally({ title }, EXTENDED_CATEGORIES).category;
+    assert.equal(category("Minecraft speedrun"), "Gaming");
+    assert.equal(category("A happy puppy"), "Pets & Animals");
+    assert.equal(category("New Marvel trailer"), "Movies & TV");
+    assert.equal(category("How to improve sleep and anxiety"), "Health & Wellness");
+    assert.equal(category("A day in my life vlog"), "Vlogs & People");
+    assert.equal(category("Index fund investing for beginners"), "Finance & Business");
   });
 
   it("still matches common word forms", () => {
