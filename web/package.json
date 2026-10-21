@@ -1,0 +1,14 @@
+{
+  "name": "eligtas-web",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "description": "Local-first web library for ELigtas (TikTok, Instagram, YouTube link sorting)",
+  "scripts": {
+    "start": "node server.js",
+    "test": "node --test \"tests/*.test.js\""
+  }
+}

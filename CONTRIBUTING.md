@@ -1,9 +1,9 @@
 # Contributing to ELigtas
 
 Thanks for stopping by. ELigtas is a small, early-stage project: an SRS
-(`README.md`) plus a growing `backend/` implementation. Small, focused
-contributions are the most welcome — a bug fix with a test beats a feature
-without one.
+(`README.md`), a Node core in `backend/`, and a local-first web library in
+`web/`. Small, focused contributions are the most welcome — a bug fix with a
+test beats a feature without one.
 
 ## How to contribute
 
@@ -27,10 +27,25 @@ without one.
 - **Errors in plain English.** Rejections and toasts name what's wrong and
   what to do next — never a bare stack trace.
 
+## Web rules (`web/`)
+
+- **Standard library only.** The server and browser code have no build step
+  and no runtime dependencies. Keep it that way unless the SRS changes.
+- **Tests live in `web/tests/*.test.js`.** Inject metadata/AI fetches instead
+  of calling real platforms from tests. Run `npm test` from `web/`.
+- **Keep the key server-side.** `OPENAI_API_KEY` belongs in the server
+  environment. Never send it to the browser or log it.
+- **Be honest about platform limits.** Do not add scraping or fake account
+  imports. TikTok/Instagram saved/liked imports need OAuth and API approval.
+- **Browser storage is user data.** Destructive actions need a preview or an
+  undo; the current library has undo for single-video deletion and a
+  confirmation for "start fresh".
+
 ## Docs
 
-- User docs live in `backend/README.md` (per-feature usage) and the root
-  `README.md` (the SRS spec).
+- User docs live in `backend/README.md` (core usage), `web/README.md` (the web
+  library), `OVERVIEW.md` (plain-language status), and the root `README.md`
+  (the SRS spec).
 - Changing a spec'd behavior? Update the matching SRS section **and** the
   §7.3 revision-history row in the same PR.
 - New user-facing feature? Document it in `backend/README.md`.

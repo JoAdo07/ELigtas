@@ -15,29 +15,13 @@
  * a manual user correction (§3.3 FR3).
  */
 
-export const DEFAULT_CATEGORIES = Object.freeze([
-  "Cooking",
-  "Tech Tips",
-  "Travel",
-  "Fitness",
-  "Beauty",
-  "DIY",
-  "Education",
-  "Entertainment",
-  "Other",
-]);
+import {
+  DEFAULT_CATEGORIES,
+  EXTENDED_CATEGORIES,
+  KEYWORDS,
+} from "./categories.js";
 
-const KEYWORDS = Object.freeze({
-  Cooking: ["recipe", "cook", "bake", "kitchen", "meal", "ingredient", "chef", "food"],
-  "Tech Tips": ["software", "app", "phone", "laptop", "coding", "tutorial", "gadget", "ai"],
-  Travel: ["travel", "flight", "hotel", "beach", "city", "trip", "vacation", "itinerary"],
-  Fitness: ["workout", "gym", "exercise", "fitness", "muscle", "cardio", "yoga", "training"],
-  Beauty: ["makeup", "skincare", "beauty", "hair", "cosmetic", "fragrance"],
-  DIY: ["diy", "craft", "woodwork", "repair", "build", "handmade", "tools"],
-  Education: ["learn", "course", "lecture", "study", "school", "exam", "language"],
-  Entertainment: ["movie", "music", "game", "comedy", "show", "concert", "funny"],
-  Other: [],
-});
+export { DEFAULT_CATEGORIES, EXTENDED_CATEGORIES };
 
 const PATTERN_CACHE = new Map();
 
